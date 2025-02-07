@@ -50,7 +50,7 @@ router.post("/checkout", (req: Request, res: Response): any => {
       itemCounts[t.SKU.AlexaSpeaker] * products[t.SKU.AlexaSpeaker].price * 0.1;
   }
 
-  res.json({ total: total.toFixed(2) });
+  res.json({ total: Number(total.toFixed(2)) });
 });
 
 export default router;
