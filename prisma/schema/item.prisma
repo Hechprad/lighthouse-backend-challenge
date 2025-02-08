@@ -1,0 +1,9 @@
+model Item {
+  sku        String   @id
+  name       String   @db.VarChar(200)
+  price      Decimal  @db.Money
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("items")
+}
