@@ -26,7 +26,10 @@ The **Lighthouse Backend Challenge** is a Node.js-based API for managing a shopp
     - [Production Mode](#production-mode)
   - [Available Routes](#available-routes)
     - [1. **POST /api/checkout**](#1-post-apicheckout)
-    - [2. **POST /api/items**](#2-post-apiitems)
+    - [/item](#item)
+      - [1. **POST /item**](#1-post-item)
+      - [2. **DELETE /item/{sku}**](#2-delete-itemsku)
+      - [3. **GET /items**](#3-get-items)
   - [Running Tests](#running-tests)
   - [Project Structure](#project-structure)
   - [Future Improvements](#future-improvements)
@@ -132,32 +135,19 @@ Response
 }
 ```
 
-### 2. **POST /api/items**
+### /item
 
-Add a new item to the database.
+#### 1. **POST /item**
 
-Example Request
+Creates a new item in the database.
 
-```json
-// Content-Type: application/json
+#### 2. **DELETE /item/{sku}**
 
-{
-  "sku": "123ABC",
-  "name": "New Item",
-  "price": 99.99
-}
-```
+Deletes an item from the database by its SKU.
 
-Response
+#### 3. **GET /items**
 
-```json
-{
-  "id": 1,
-  "sku": "123ABC",
-  "name": "New Item",
-  "price": 99.99
-}
-```
+Retrieves all items from the database.
 
 ---
 
