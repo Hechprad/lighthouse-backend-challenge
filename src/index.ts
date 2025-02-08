@@ -1,10 +1,13 @@
 import express, { Request, Response } from "express";
-import checkoutRouter from "./routes/checkout";
+
+import checkoutRouter from "./controller/checkout";
+import itemRouter from "./controller/item";
 
 const app = express();
 app.use(express.json());
 
 app.use("/api", checkoutRouter);
+app.use("/api", itemRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Lighthouse Backend Challenge API is running!");

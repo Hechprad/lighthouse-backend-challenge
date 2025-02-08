@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "dotenv -e .env nodemon ./src/index.ts",
-    "start:dev": "dotenv -e .env.development nodemon ./src/index.ts",
+    "start": "dotenv -e .env node dist/index.js",
+    "start:dev": "dotenv -e .env.development nodemon src/index.ts",
+    "build": "tsc",
     "test": "jest --passWithNoTests --detectOpenHandles --watch",
     "test:noWatch": "jest --passWithNoTests --detectOpenHandles",
     "eslint": "eslint .",
@@ -13,8 +14,8 @@
     "prisma:generate": "prisma generate",
     "migration:create": "prisma migrate dev --create-only",
     "migrate": "prisma migrate deploy",
-    "seed": "ts-node ./prisma/seed.ts",
-    "migrate:seed": "npm run migrate && npm run seed"
+    "seed": "ts-node prisma/seed.ts",
+    "prepare": "npm run migrate && npm run seed"
   },
   "author": {
     "name": "Jorge Hecherat",
