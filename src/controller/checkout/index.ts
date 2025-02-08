@@ -16,6 +16,7 @@ router.post("/checkout", (req: Request, res: Response) => {
 
   if (!items || !items.length) {
     res.status(400).json({ error: "Invalid items array" });
+    return;
   }
 
   let total = 0;

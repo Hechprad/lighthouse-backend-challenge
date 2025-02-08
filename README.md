@@ -27,9 +27,10 @@ The **Lighthouse Backend Challenge** is a Node.js-based API for managing a shopp
   - [Available Routes](#available-routes)
     - [1. **POST /api/checkout**](#1-post-apicheckout)
     - [/item](#item)
-      - [1. **POST /item**](#1-post-item)
-      - [2. **DELETE /item/{sku}**](#2-delete-itemsku)
-      - [3. **GET /items**](#3-get-items)
+      - [1. **GET /item/{sku}**](#1-get-itemsku)
+      - [2. **GET /items**](#2-get-items)
+      - [3. **POST /item**](#3-post-item)
+      - [4. **DELETE /item/{sku}**](#4-delete-itemsku)
   - [Running Tests](#running-tests)
   - [Project Structure](#project-structure)
   - [Future Improvements](#future-improvements)
@@ -117,10 +118,11 @@ A aplicação estará disponível em: `http://localhost:3000`.
 
 Processes the purchase and applies promotions.
 
+- Content-Type: application/json
+
 Example Request
 
 ```json
-// Content-Type: application/json
 
 {
   "items": ["43N23P", "344222"]
@@ -137,17 +139,46 @@ Response
 
 ### /item
 
-#### 1. **POST /item**
+#### 1. **GET /item/{sku}**
+
+Retrieves a specific item from the database by its SKU.
+
+#### 2. **GET /items**
+
+Retrieves all items from the database.
+
+#### 3. **POST /item**
 
 Creates a new item in the database.
 
-#### 2. **DELETE /item/{sku}**
+- Content-Type: application/json
+
+Example Request
+
+```json
+
+{
+  "name": "Google Home",
+  "sku": "123123123",
+  "price": 49.99
+}
+```
+
+Response
+
+```json
+{
+  "sku": "123123123",
+  "name": "Google Home",
+  "price": "49.99",
+  "created_at": "2025-02-08T02:52:21.906Z",
+  "updated_at": "2025-02-08T02:52:21.906Z"
+}
+```
+
+#### 4. **DELETE /item/{sku}**
 
 Deletes an item from the database by its SKU.
-
-#### 3. **GET /items**
-
-Retrieves all items from the database.
 
 ---
 
