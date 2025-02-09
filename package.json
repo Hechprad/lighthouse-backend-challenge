@@ -14,8 +14,9 @@
     "migrate": "prisma migrate deploy",
     "seed": "ts-node prisma/seed.ts",
     "prepare": "npm run migrate && npm run seed",
-    "test:noWatch": "npm run prepare && env-cmd -f .env.test jest --runInBand --forceExit",
-    "test": "npm run prepare && env-cmd -f .env.test jest --watchAll"
+    "prepare:test": "env-cmd -f .env.test npm run migrate && env-cmd -f .env.test npm run seed",
+    "test:noWatch": "npm run prepare:test && env-cmd -f .env.test jest --runInBand --forceExit",
+    "test": "npm run prepare:test && env-cmd -f .env.test jest --watchAll"
   },
   "author": {
     "name": "Jorge Hecherat",
