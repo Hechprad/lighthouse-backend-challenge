@@ -114,6 +114,8 @@ A aplicação estará disponível em: `http://localhost:3000`.
 
 ## Available Routes
 
+*NOTE: You can test all API endpoints using the [Postman Collection](https://github.com/Hechprad/lighthouse-backend-challenge/blob/main/postman_collection/lighthouse-backend-challenge.postman_collection.json) that contains pre-configured requests for this project.
+
 ### 1. **POST /api/checkout**
 
 Processes the purchase and applies promotions.
