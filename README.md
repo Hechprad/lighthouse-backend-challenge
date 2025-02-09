@@ -25,12 +25,13 @@ The **Lighthouse Backend Challenge** is a Node.js-based API for managing a shopp
   - [Database Setup](#database-setup)
     - [Production Mode](#production-mode)
   - [Available Routes](#available-routes)
-    - [1. **POST /api/checkout**](#1-post-apicheckout)
-    - [/item](#item)
-      - [1. **GET /item/{sku}**](#1-get-itemsku)
-      - [2. **GET /items**](#2-get-items)
-      - [3. **POST /item**](#3-post-item)
-      - [4. **DELETE /item/{sku}**](#4-delete-itemsku)
+    - [**Checkout**](#checkout)
+      - [1. **POST /api/checkout**](#1-post-apicheckout)
+    - [Items](#items)
+      - [1. **GET /api/item/{sku}**](#1-get-apiitemsku)
+      - [2. **GET /api/items**](#2-get-apiitems)
+      - [3. **POST /api/item**](#3-post-apiitem)
+      - [4. **DELETE /api/item/{sku}**](#4-delete-apiitemsku)
   - [Running Tests](#running-tests)
   - [Project Structure](#project-structure)
   - [Future Improvements](#future-improvements)
@@ -116,7 +117,9 @@ A aplicação estará disponível em: `http://localhost:3000`.
 
 *NOTE: You can test all API endpoints using the [Postman Collection](https://github.com/Hechprad/lighthouse-backend-challenge/blob/main/postman_collection/lighthouse-backend-challenge.postman_collection.json) that contains pre-configured requests for this project.
 
-### 1. **POST /api/checkout**
+### **Checkout**
+
+#### 1. **POST /api/checkout**
 
 Processes the purchase and applies promotions.
 
@@ -139,17 +142,17 @@ Response
 }
 ```
 
-### /item
+### Items
 
-#### 1. **GET /item/{sku}**
+#### 1. **GET /api/item/{sku}**
 
 Retrieves a specific item from the database by its SKU.
 
-#### 2. **GET /items**
+#### 2. **GET /api/items**
 
 Retrieves all items from the database.
 
-#### 3. **POST /item**
+#### 3. **POST /api/item**
 
 Creates a new item in the database.
 
@@ -178,7 +181,7 @@ Response
 }
 ```
 
-#### 4. **DELETE /item/{sku}**
+#### 4. **DELETE /api/item/{sku}**
 
 Deletes an item from the database by its SKU.
 
