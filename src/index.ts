@@ -1,13 +1,20 @@
 import express from "express";
+import cors from "cors";
 
-import checkoutRouter from "./controller/checkout";
-import itemRouter from "./controller/item";
+import routes from "./routes";
 
 const app = express();
 app.use(express.json());
+app.use(
+  cors({
+    origin: process.env.domain,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
-app.use("/api", checkoutRouter);
-app.use("/api", itemRouter);
+routes(app);
 
 const isTestEnv = process.env.NODE_ENV === "test";
 

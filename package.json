@@ -36,6 +36,7 @@
   "type": "commonjs",
   "dependencies": {
     "@prisma/client": "^6.3.1",
+    "cors": "^2.8.5",
     "env-cmd": "^10.1.0",
     "express": "^4.21.2",
     "jiti": "^2.4.2",
@@ -46,6 +47,7 @@
     "typescript": "^5.7.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.1",
