@@ -206,6 +206,7 @@ npm run test:noWatch
 src/
   ├── controllers/       # Handle the requests for each route.
   ├── database/          # Database configuration (Prisma): Configures the connection to the database and sets up Prisma client.
+  ├── routes/            # Defines the application's routing structure and organizes route endpoints.
   └── index.ts           # Application entry point: The main file that initializes the app and starts the server.
 prisma/
   ├── migrations/        # Contains database migration files that define changes to the database schema.
