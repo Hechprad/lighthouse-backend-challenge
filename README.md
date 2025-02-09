@@ -105,7 +105,7 @@ To compile TypeScript and run the production version:
 
 ```bash
 npm run build
-npm run start
+npm run start:prod
 ```
 
 A aplicação estará disponível em: `http://localhost:3000`.

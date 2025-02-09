@@ -13,8 +13,24 @@ services:
     networks:
       - lighthouse-backend-challenge-network
 
+  # tests database
+  db-test:
+    image: postgres:13
+    container_name: postgres-db-test
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: lighthouse-backend-challenge-test
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-test-data:/var/lib/postgresql/data
+    networks:
+      - lighthouse-backend-challenge-network
+
 volumes:
   postgres-data:
+  postgres-test-data:
 
 networks:
   lighthouse-backend-challenge-network:
