@@ -1,17 +1,17 @@
 import { Router, Request, Response } from "express";
 
-import * as t from "./types";
+import prisma from "../../database/prisma-client";
 
 const router = Router();
 
-const products: t.Products = {
-  [t.SKU.AlexaSpeaker]: { name: "Alexa Speaker", price: 109.5 },
-  [t.SKU.GoogleHome]: { name: "Google Home", price: 49.99 },
-  [t.SKU.MacPro]: { name: "Mac Pro", price: 5399.99 },
-  [t.SKU.RaspberryPi]: { name: "Raspberry Pi", price: 30.0 },
-};
+export enum SKU {
+  GoogleHome = "120P90",
+  MacPro = "43N23P",
+  AlexaSpeaker = "A304SD",
+  RaspberryPi = "344222",
+}
 
-router.post("/checkout", (req: Request, res: Response) => {
+router.post("/checkout", async (req: Request, res: Response) => {
   const { items }: { items: string[] } = req.body;
 
   if (!items || !items.length) {
@@ -21,36 +21,56 @@ router.post("/checkout", (req: Request, res: Response) => {
 
   let total = 0;
   const itemCounts: Record<string, number> = {};
+  const checkoutItems: Record<string, number> = {};
 
-  items.forEach((sku) => {
-    if (products[sku]) {
-      total += products[sku].price;
-      itemCounts[sku] = (itemCounts[sku] || 0) + 1;
-    }
-  });
-
-  // 1. Buy 3 Google Homes for the price of 2
-  if (itemCounts[t.SKU.GoogleHome] >= 3) {
-    const discountUnits = Math.floor(itemCounts[t.SKU.GoogleHome] / 3);
-    total -= discountUnits * products[t.SKU.GoogleHome].price;
-  }
-
-  // 2. Each MacBook Pro comes with a free Raspberry Pi
-  if (itemCounts[t.SKU.MacPro] > 0 && itemCounts[t.SKU.RaspberryPi] > 0) {
-    const freeUnits = Math.min(
-      itemCounts[t.SKU.MacPro],
-      itemCounts[t.SKU.RaspberryPi]
+  try {
+    const itemPromises = items.map((sku) =>
+      prisma.item.findUnique({ where: { sku } })
     );
-    total -= freeUnits * products[t.SKU.RaspberryPi].price;
-  }
 
-  // 3. 10% off for more than 3 Alexa Speakers
-  if (itemCounts[t.SKU.AlexaSpeaker] > 3) {
-    total -=
-      itemCounts[t.SKU.AlexaSpeaker] * products[t.SKU.AlexaSpeaker].price * 0.1;
-  }
+    const results = await Promise.all(itemPromises);
 
-  res.json({ total: Number(total.toFixed(2)) });
+    if (results.length) {
+      results.forEach((item) => {
+        if (!item) {
+          res.status(404).json({ error: "Item not found" });
+          return;
+        }
+
+        total += Number(item.price);
+        itemCounts[item.sku] = (itemCounts[item.sku] || 0) + 1;
+        checkoutItems[item.sku] = Number(item.price);
+      });
+    }
+
+    // 1. Buy 3 Google Homes for the price of 2
+    if (itemCounts[SKU.GoogleHome] >= 3) {
+      const discountUnits = Math.floor(itemCounts[SKU.GoogleHome] / 3);
+      total -= discountUnits * checkoutItems[SKU.GoogleHome];
+    }
+
+    // 2. Each MacBook Pro comes with a free Raspberry Pi
+    if (itemCounts[SKU.MacPro] > 0 && itemCounts[SKU.RaspberryPi] > 0) {
+      const freeUnits = Math.min(
+        itemCounts[SKU.MacPro],
+        itemCounts[SKU.RaspberryPi]
+      );
+      total -= freeUnits * checkoutItems[SKU.RaspberryPi];
+    }
+
+    // 3. 10% off for more than 3 Alexa Speakers
+    if (itemCounts[SKU.AlexaSpeaker] > 3) {
+      total -=
+        itemCounts[SKU.AlexaSpeaker] * checkoutItems[SKU.AlexaSpeaker] * 0.1;
+    }
+
+    res.json({ total: Number(total.toFixed(2)) });
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to checkout",
+      details: (error as { message?: string }).message,
+    });
+  }
 });
 
 export default router;
